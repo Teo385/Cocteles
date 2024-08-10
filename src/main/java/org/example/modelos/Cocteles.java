@@ -4,7 +4,7 @@ public abstract class Cocteles {
 
     private String nombre;
 
-    private Integer precio;
+    private Double precio;
 
     private String ingredientes;
 
@@ -12,16 +12,18 @@ public abstract class Cocteles {
 
     private Boolean esPerecedero;
 
-    private String tamaño;
+    private Integer tamaño; //en mililitros
 
     private String nivelDeDulzura;
 
     private String descripcion;
 
+    private Integer cantidadDeCocteles;
+
     public Cocteles() {
     }
 
-    public Cocteles(String nombre, Integer precio, String ingredientes, String gradosDeAlcohol, Boolean esPerecedero, String tamaño, String nivelDeDulzura, String descripcion) {
+    public Cocteles(String nombre, Double precio, String ingredientes, String gradosDeAlcohol, Boolean esPerecedero, Integer tamaño, String nivelDeDulzura, String descripcion, Integer cantidadDeCocteles) {
         this.nombre = nombre;
         this.precio = precio;
         this.ingredientes = ingredientes;
@@ -30,7 +32,10 @@ public abstract class Cocteles {
         this.tamaño = tamaño;
         this.nivelDeDulzura = nivelDeDulzura;
         this.descripcion = descripcion;
+        this.cantidadDeCocteles = cantidadDeCocteles;
     }
+
+    public abstract Double calcularCostoVenta();
 
     public String getNombre() {
         return nombre;
@@ -40,11 +45,11 @@ public abstract class Cocteles {
         this.nombre = nombre;
     }
 
-    public Integer getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Integer precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
@@ -72,11 +77,11 @@ public abstract class Cocteles {
         this.esPerecedero = esPerecedero;
     }
 
-    public String getTamaño() {
+    public Integer getTamaño() {
         return tamaño;
     }
 
-    public void setTamaño(String tamaño) {
+    public void setTamaño(Integer tamaño) {
         this.tamaño = tamaño;
     }
 
@@ -94,5 +99,13 @@ public abstract class Cocteles {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Integer getCantidadDeCocteles() {
+        return cantidadDeCocteles;
+    }
+
+    public void setCantidadDeCocteles(Integer cantidadDeCocteles) {
+        this.cantidadDeCocteles = cantidadDeCocteles;
     }
 }
