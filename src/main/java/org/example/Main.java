@@ -1,8 +1,9 @@
 package org.example;
 
+import org.example.helper.validaciones.ValidacionCocteles;
+import org.example.modelos.Cocteles;
 import org.example.modelos.hijos.CoctelConJugo;
 import org.example.modelos.hijos.CoctelSoloAlcohol;
-import org.example.validaciones.CoctelesValidaciones;
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -10,6 +11,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner lea = new Scanner(System.in);
+        ValidacionCocteles validacion = new ValidacionCocteles();
 
         // Elegir tipo de cóctel
         System.out.println("Seleccione el tipo de cóctel (1: Con Jugo, 2: Solo Alcohol): ");
@@ -25,34 +27,32 @@ public class Main {
         String nivelDeDulzura;
         String descripcion;
 
-        // Validación de nombre
-        do {
-            System.out.print("Ingrese el nombre del cóctel: ");
-            nombreCoctel = lea.nextLine();
-            if (!CoctelesValidaciones.validarNombre(nombreCoctel)) {
-                System.out.println("Nombre inválido. Ingrese el nombre del cóctel (solo letras y espacios): ");
+        while (true) {
+            try {
+                System.out.print("Ingrese el nombre del cóctel: ");
+                nombreCoctel = lea.nextLine();
+                validacion.validarNombre(nombreCoctel);
+                break; // Salir del bucle si la validación es exitosa
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
-        } while (!CoctelesValidaciones.validarNombre(nombreCoctel));
+        }
 
-        // Validación de precio
-        do {
-            System.out.print("Ingrese el costo del cóctel: ");
-            precioCoctel = lea.nextDouble();
-            if (!CoctelesValidaciones.validarCosto(precioCoctel)) {
-                System.out.println("Costo inválido. me va a regalar plata o que mi fai? ");
+        while (true) {
+            try {
+                System.out.print("Ingrese el costo del cóctel: ");
+                precioCoctel = lea.nextDouble();
+                validacion.validarPrecio(precioCoctel);
+                break; // Salir del bucle si la validación es exitosa
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                lea.nextLine(); // Consumir la nueva línea en caso de excepción
             }
-        } while (!CoctelesValidaciones.validarCosto(precioCoctel));
+        }
 
-        // Validación de cantidad
-        do {
-            System.out.print("Ingrese la cantidad del cóctel (en unidades): ");
-            cantidadCoctel = lea.nextInt();
-            if (!CoctelesValidaciones.validarTamaño(cantidadCoctel)) {
-                System.out.println("Cantidad inválida. Ingrese una cantidad positiva: ");
-            }
-        } while (!CoctelesValidaciones.validarTamaño(cantidadCoctel));
-
-        lea.nextLine(); // Consumir la nueva línea
+        System.out.print("Ingrese la cantidad del cóctel (en unidades): ");
+        cantidadCoctel = lea.nextInt();
+        lea.nextLine();
 
         System.out.print("Ingrese los ingredientes del cóctel: ");
         ingredientesCoctel = lea.nextLine();
@@ -63,27 +63,35 @@ public class Main {
         System.out.print("Nivel de dulzura: ");
         nivelDeDulzura = lea.nextLine();
 
-        System.out.print("Descripción: ");
-        descripcion = lea.nextLine();
+        while (true) {
+            try {
+                System.out.print("Descripción: ");
+                descripcion = lea.nextLine();
+                validacion.validarDescripcion(descripcion);
+                break; // Salir del bucle si la validación es exitosa
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
 
         if (tipoCoctel == 1) { // Coctel con jugo
             LocalDate fechaVencimiento;
-            do {
+            while (true) {
                 System.out.print("Ingrese la fecha de vencimiento (YYYY-MM-DD): ");
                 try {
                     fechaVencimiento = LocalDate.parse(lea.nextLine());
-                    break;
+                    break; // Salir del bucle si la fecha es válida
                 } catch (Exception e) {
                     System.out.println("Fecha inválida. Ingrese una fecha válida (YYYY-MM-DD): ");
                 }
-            } while (true);
+            }
 
             CoctelConJugo coctelConJugo = new CoctelConJugo(nombreCoctel, precioCoctel, ingredientesCoctel, gradosDeAlcohol, true, null, nivelDeDulzura, descripcion, cantidadCoctel, fechaVencimiento);
 
             System.out.println("Información del cóctel con jugo:");
             System.out.println("Nombre: " + coctelConJugo.getNombre());
             System.out.println("Precio: " + coctelConJugo.getPrecio());
-            System.out.println("Cantidad: " + coctelConJugo.getCantidadDeCocteles());
+            System.out.println("Cantidad: " + coctelConJugo.getCantidadDeCocteles() + " mL");
             System.out.println("Ingredientes: " + coctelConJugo.getIngredientes());
             System.out.println("Grados de alcohol: " + coctelConJugo.getGradosDeAlcohol());
             System.out.println("Nivel de dulzura: " + coctelConJugo.getNivelDeDulzura());
@@ -97,7 +105,7 @@ public class Main {
             System.out.println("Información del cóctel solo alcohol:");
             System.out.println("Nombre: " + coctelSoloAlcohol.getNombre());
             System.out.println("Precio: " + coctelSoloAlcohol.getPrecio());
-            System.out.println("Cantidad: " + coctelSoloAlcohol.getCantidadDeCocteles());
+            System.out.println("Cantidad: " + coctelSoloAlcohol.getCantidadDeCocteles() + " mL");
             System.out.println("Ingredientes: " + coctelSoloAlcohol.getIngredientes());
             System.out.println("Grados de alcohol: " + coctelSoloAlcohol.getGradosDeAlcohol());
             System.out.println("Nivel de dulzura: " + coctelSoloAlcohol.getNivelDeDulzura());

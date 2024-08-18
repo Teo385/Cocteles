@@ -26,4 +26,5 @@ public class CoctelSoloAlcohol extends Cocteles {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
 }

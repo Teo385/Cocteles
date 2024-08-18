@@ -1,6 +1,10 @@
 package org.example.modelos;
 
+import org.example.helper.validaciones.ValidacionCocteles;
+
 public abstract class Cocteles {
+
+    private ValidacionCocteles validacionCocteles = new  ValidacionCocteles();
 
     private String nombre;
 
@@ -41,16 +45,29 @@ public abstract class Cocteles {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombre(String nombre){
+        try {
+            this.validacionCocteles.validarNombre(nombre);
+            System.out.println("Todo Esta super bien");
+            this.nombre = nombre;
+        } catch (Exception error) {
+            System.out.println(error.getMessage());
+        }
     }
+
 
     public Double getPrecio() {
         return precio;
     }
 
     public void setPrecio(Double precio) {
-        this.precio = precio;
+        try {
+            this.validacionCocteles.validarPrecio(precio);
+            System.out.println("Todo Esta super bien");
+            this.precio = precio;
+        }catch (Exception error) {
+            System.out.println(error.getMessage());
+        }
     }
 
     public String getIngredientes() {
@@ -98,7 +115,14 @@ public abstract class Cocteles {
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        try {
+            this.validacionCocteles.validarDescripcion(descripcion);
+            System.out.println("Todo esta super bien");
+            this.descripcion = descripcion;
+        }catch (Exception error){
+            System.out.println(error.getMessage());
+        }
+
     }
 
     public Integer getCantidadDeCocteles() {
